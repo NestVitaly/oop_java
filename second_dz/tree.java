@@ -17,7 +17,7 @@ class PersonImpl implements Person {
     private int birthYear;
     private List<Person> children;
 
-    public PersonImpl(String name, int berthYear) {
+    public PersonImpl(String name, int birthYear) {
         this.name = name;
         this.birthYear = birthYear;
         this.children = new ArrayList<>();
