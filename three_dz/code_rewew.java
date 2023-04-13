@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.function.Predicate;
 
 // Интерфейс человека
-interface Person {
+interface Person<T extends Person> {
     String getName();
     int getBirthYear();
-    List<Person> getChildren();
-    void addChild(Person child);
-    boolean test(Predicate<Person> predicate); //добавлен интерфейс для проверки условий
+    List<T> getChildren();
+    void addChild(T child);
+    boolean test(Predicate<T> predicate); //добавлен интерфейс для проверки условий
 }
 
 // Реализация интерфейса "Человек"
@@ -44,6 +44,12 @@ class PersonImpl implements Person {
     public void addChild(Person child) {
         children.add(child);
     }
+
+    @Override
+    public boolean test(Predicate predicate) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'test'");
+    }
 }
 
 public class code_rewew {
@@ -69,34 +75,34 @@ public class code_rewew {
     }
 }
 
-class GenealogyManager {
-    private List<Person> people;
+class GenealogyManager<T extends Person> {
+    private List<T> people;
     public GenealogyManager() {
         this.people = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
+    public void addPerson(T person) {
         people.add(person);
     }
     public void setChild(String parentName, String childName) {
-        Person parent = findPersonByName(parentName);
-        Person child = findPersonByName(childName);
+        T parent = findPersonByName(parentName);
+        T child = findPersonByName(childName);
         if (parent != null && child != null) {
             parent.addChild(child);
         }
     }
 
-    public List<Person> getChildren(String parentName) {
-        Person parent = findPersonByName(parentName);
+    public List<T> getChildren(String parentName) {
+        T parent = findPersonByName(parentName);
         if (parent != null) {
-            return parent.getChildren();
+            return (List<T>) parent.getChildren();
         } else {
             return new ArrayList<>();
         }
     }
 
-    private Person findPersonByName(String name) {
-        for (Person person : people) {
+    private T findPersonByName(String name) {
+        for (T person : people) {
             if (person.getName().equals(name)) {
                 return person;
             }
